@@ -14,7 +14,7 @@ class PizzaView:
             print(f'Ошибка {result}')
 
     def update_weight(self, new_weight):
-        result = self.controller.update_price(new_weight)
+        result = self.controller.update_weight(new_weight)
         if result is False:
             print(f'Введены не корректные данные - {new_weight}')
         elif result is True:
@@ -47,4 +47,27 @@ class PizzaView:
         else:
             print(f'Ошибка {result}')
 
+    def display_all(self):
+        result = self.controller.get_pizza()
+        print(result['name'])
+        print(f'Состав пиццы: ')
+        for item in result['ingredients']:
+            print(f'  -{item}')
+        print(f'Вес пиццы - {result["weight"]}')
+        print(40 * '=')
+        print(f'Цена - {result["price"]}')
+        print(40 * '=')
 
+    def display_consist(self):
+        result = self.controller.get_pizza()
+        print(f'Состав пиццы: ')
+        for item in result['ingredients']:
+            print(f'  -{item}')
+        print(f'Вес пиццы - {result["weight"]}')
+        print(40 * '=')
+
+    def display_price(self):
+        result = self.controller.price()
+        print(40 * '=')
+        print(f'Цена - {result}')
+        print(40 * '=')

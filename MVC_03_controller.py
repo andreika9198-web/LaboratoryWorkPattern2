@@ -5,6 +5,10 @@ class PizzaController:
     def __init__(self, name, price, weight):
         self.model = PizzaModel(name, price, weight)
 
+    def price(self):
+        """Метод для получения цены пиццы"""
+        return self.model.price
+
     def update_price(self, new_price):
         """Метод для изменения цены пиццы."""
         if not isinstance(new_price, (int,float)):
