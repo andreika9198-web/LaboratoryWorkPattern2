@@ -8,17 +8,24 @@ class PizzaModel:
         self.__ingredients = []
 
     @property
+    def name(self):
+        return self.__name
+
+    @property
+    def ingredients(self):
+        return self.__ingredients.copy()
+
+    @property
     def price(self):
         return self.__price
 
     @price.setter
     def price(self,new_price):
         if new_price < 0:
-            raise ValueError("цена не может быть отрицательным")
+            raise ValueError("Цена не может быть отрицательной")
         if new_price == self.__price:
             raise ValueError('Новая цена совпадает с текущей')
-        if new_price < self.__price:
-            raise ValueError('Новая цена не может быть меньше старой')
+
         self.__price = new_price
 
     @property
@@ -28,9 +35,9 @@ class PizzaModel:
     @weight.setter
     def weight(self, new_weight):
         if new_weight < 0:
-            raise ValueError("цена не может быть отрицательным")
-        if new_weight == self.__price:
-            raise ValueError('Новая цена совпадает с текущей')
+            raise ValueError("Вес не может быть отрицательным")
+        if new_weight == self.__weight:
+            raise ValueError('Новый вес совпадает с текущей')
         self.__weight = new_weight
 
 
@@ -38,20 +45,28 @@ class PizzaModel:
         self.__ingredients.append(ingredients)
 
 
-    def change_ingredients(self,ingredient):
+    def delete_ingredients(self,ingredient):
         if len(self.__ingredients) <= 0:
-            raise ValueError('Ингридиентов нету')
+            raise ValueError('Ингредиентов нет')
         try:
             self.__ingredients.remove(ingredient)
             return True
         except ValueError:
-            return 'Такого ингридиента нету'
+            raise ValueError(f'Ингредиент "{ingredient}" не найден')
 
+    def update_ingredient(self, old_ingredient, new_ingredient):
+        """Заменить один ингредиент на другой"""
+        try:
+            index = self.__ingredients.index(old_ingredient)
+            self.__ingredients[index] = new_ingredient
+            return True
+        except ValueError:
+            raise ValueError(f'Ингредиент "{old_ingredient}" не найден')
 
     def get_pizza(self):
         data = {
             'name': self.__name,
-            'ingredients': self.__ingredients,
+            'ingredients': self.__ingredients.copy(),
             'price': self.__price,
             'weight': self.__weight
         }
